@@ -1,0 +1,34 @@
+{
+  "_comment": "API configuration - copy to api.json and fill in your keys",
+  
+  "_openai_example": {
+    "provider": "openai",
+    "api_key": "sk-xxx",
+    "base_url": "",
+    "model": "gpt-4o"
+  },
+  
+  "_openai_proxy_example": {
+    "provider": "openai",
+    "api_key": "sk-xxx",
+    "base_url": "",
+    "model": "gpt-5-mini"
+  },
+  
+  "_gemini_example": {
+    "provider": "gemini",
+    "api_key": "AIza...",
+    "model": "gemini-2.0-flash"
+  },
+  
+  "_claude_example": {
+    "provider": "claude",
+    "api_key": "sk-ant-...",
+    "model": "claude-sonnet-4-20250514"
+  },
+  
+  "provider": "openai",
+  "api_key": "YOUR_API_KEY_HERE",
+  "base_url": "",
+  "model": "gpt-5-mini"
+}

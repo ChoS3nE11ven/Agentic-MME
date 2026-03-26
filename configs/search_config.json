@@ -1,0 +1,10 @@
+{
+  "serper_api_key": "",
+  "imgbb_api_key": "",
+  "jina_api_key": "",
+  "cache_dir": "",
+  "replay": false,
+  "request_timeout_s": 45,
+  "default_gl": "us",
+  "default_hl": "en"
+}
