@@ -1,6 +1,6 @@
 # Agentic-MME: What Agentic Capability Really Brings to Multimodal Intelligence?
 
-This is the official repository for **Agentic-MME**, a comprehensive benchmark designed to evaluate the agentic capabilities of Multimodal Large Language Models (MLLMs). As MLLMs evolve from passive observers into active agents, they increasingly solve real-world problems through **Visual Expansion** (invoking visual tools to transform images) and **Knowledge Expansion** (leveraging open-web search). However, existing evaluations fail to capture the synergy between these capabilities or verify whether tools are actually invoked, applied correctly, and used efficiently.
+This is the official repository for [***Agentic-MME***](https://arxiv.org/pdf/2604.03016), a comprehensive benchmark designed to evaluate the agentic capabilities of Multimodal Large Language Models (MLLMs). As MLLMs evolve from passive observers into active agents, they increasingly solve real-world problems through **Visual Expansion** (invoking visual tools to transform images) and **Knowledge Expansion** (leveraging open-web search). However, existing evaluations fail to capture the synergy between these capabilities or verify whether tools are actually invoked, applied correctly, and used efficiently.
 
 Agentic-MME addresses these gaps with 418 real-world tasks across 6 domains and 3 difficulty levels, featuring over 2,000 stepwise checkpoints (averaging 10+ person-hours of manual annotation per task). Our framework supports both sandboxed code execution and structured tool APIs, enabling true process-level verification through dual-axis evaluation (S-axis for strategy, V-axis for visual operations) and an overthinkin metric relative to human trajectories.
 
@@ -34,8 +34,8 @@ Agentic-MME addresses these gaps with 418 real-world tasks across 6 domains and 
 To set up the environment, please follow the steps below:
 
 ```bash
-git clone https://github.com/ChoS3nE11ven/AgenticMME.git
-cd AgenticMME
+git clone https://github.com/ChoS3nE11ven/Agentic-MME.git
+cd Agentic-MME
 conda create -n agenticmme python=3.9 -y
 conda activate agenticmme
 pip install -r requirements.txt
@@ -71,7 +71,7 @@ python general/run_general_script_openai.py \
     --enable_search \
     --search_config configs/search_config.json \
     --max_rounds 15 \
-    --max_tool_calls 20
+    --max_tool_calls 15
 ```
 
 **Local Models:**
