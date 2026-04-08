@@ -293,10 +293,10 @@ think_with_image_pipeline_v4_updated_multiturn/
 If you find our work useful in your research, please consider citing:
 
 ```bibtex
-@misc{agenticmme2026,
-  title   = {Agentic-MME: What Agentic Capability Really Brings to Multimodal Intelligence?},
-  author  = {Qianshan Wei, Yishan Yang, Siyi Wang, Jinglin Chen, Binyu Wang, Jiaming Wang, Shuang Chen, Zechen Li, Yang Shi, Yuqi Tang, Weining Wang, Yi Yu, Chaoyou Fu, Qi Li, Yi-Fan Zhang},
-  year    = {2026},
-  note    = {Process-verified benchmark for multimodal agentic capability}
+@article{wei2026agenticmme,
+  title={Agentic-MME: What Agentic Capability Really Brings to Multimodal Intelligence?},
+  author={Qianshan Wei and Yishan Yang and Siyi Wang and Jinglin Chen and Binyu Wang and Jiaming Wang and Shuang Chen and Zechen Li and Yang Shi and Yuqi Tang and Weining Wang and Yi Yu and Chaoyou Fu and Qi Li and Yi-Fan Zhang},
+  journal={arXiv preprint arXiv:2604.03016},
+  year={2026}
 }
 ```
