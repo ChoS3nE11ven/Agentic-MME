@@ -5,7 +5,7 @@
 [![Project Page](https://img.shields.io/badge/Project-Page-blue)](https://agenticmme.github.io/)
 [![Paper](https://img.shields.io/badge/Paper-Arxiv-red)](https://arxiv.org/abs/2604.03016)
 [![HF Paper](https://img.shields.io/badge/Paper-HuggingFace-yellow)](https://huggingface.co/papers/2604.03016)
-[![HF Dataset](https://img.shields.io/badge/Dataset-HuggingFace-orange)](#)
+[![HF Dataset](https://img.shields.io/badge/Dataset-HuggingFace-orange)](https://huggingface.co/datasets/Crystal1047/Agentic-MME)
 
 </div>
 
@@ -157,7 +157,7 @@ python general/run_general_script_openai.py \
 
 ```bash
 # Thyme
-python general/run_general_script_thyme.py \
+python -m general.run_general_script_thyme \
     --task_dir ../merged/json \
     --dataset_root ../merged \
     --model_path /path/to/thyme-model \
@@ -166,7 +166,7 @@ python general/run_general_script_thyme.py \
     --skip_existing
 
 # DeepEyes
-python general/run_general_script_deepeyes.py \
+python -m general.run_general_script_deepeyes \
     --task_dir ../merged/json \
     --dataset_root ../merged \
     --model_path /path/to/deepeyes-model \
@@ -271,7 +271,7 @@ V-axis checks whether the model performed the right visual operations and whethe
 It contains two different checkpoint types:
 
 1. `tool-use` checkpoints
-These verify whether the expected visual operation was invoked, such as `crop`, `resize`, `rotate`, or `enhance`.
+These verify whether the expected visual operation was invoked, such as `crop`, `resize`, `rotate`, `flip`, or `enhance`.
 
 2. `visual-check` checkpoints
 These use a judge model to inspect generated images and determine whether the visual result satisfies the requirement.
@@ -396,7 +396,7 @@ Typical contents:
 ## Project Structure
 
 ```text
-think_with_image_pipeline_v4_updated_multiturn/
+Agentic-MME/
 ├── atomic/                        # Atomic mode scripts
 │   ├── run_atomic_tools_openai.py
 │   ├── run_atomic_tools_thyme.py
