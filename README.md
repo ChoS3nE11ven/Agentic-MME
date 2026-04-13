@@ -152,18 +152,6 @@ print(ds)
 print(ds.features)
 ```
 
-Current split/fields:
-
-- Split: `train` (`418` examples)
-- Fields:
-  - `image`
-  - `task_id`
-  - `question`
-  - `match_type`
-  - `golden_answer`
-  - `question_images`
-  - `visual_clues`
-  - `search_evidence`
 
 ### 🗂️ Official dataset folder layout
 
@@ -181,8 +169,8 @@ Folder purpose:
 |---|---|---|
 | `json/` | Task configuration files (`*.json`) | ✅ Required |
 | `images/` | Input images referenced by task IDs | ✅ Required |
-| `image_cause/` | Auxiliary image evidence/metadata | ⚪ Optional (analysis/inspection) |
-| `search_url/` | Retrieval evidence metadata | ⚪ Optional (analysis/inspection) |
+| `image_cause/` | Auxiliary image evidence/metadata | ✅ Required (analysis/inspection) |
+| `search_url/` | Retrieval evidence metadata | ✅ Required (analysis/inspection) |
 
 ### 🧭 Recommended runner invocation with this layout
 
