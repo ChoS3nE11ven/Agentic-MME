@@ -2,15 +2,17 @@
 
 <div align="center">
 
-[![Project Page](https://img.shields.io/badge/Project-Page-blue?style=for-the-badge)](https://agenticmme.github.io/)
-[![Paper](https://img.shields.io/badge/Paper-arXiv%202604.03016-red?style=for-the-badge)](https://arxiv.org/abs/2604.03016)
-[![HF Paper](https://img.shields.io/badge/HF-Paper-yellow?style=for-the-badge)](https://huggingface.co/papers/2604.03016)
-[![HF Dataset](https://img.shields.io/badge/HF-Dataset-orange?style=for-the-badge)](https://huggingface.co/datasets/Crystal1047/Agentic-MME)
+🌐 [![Project Page](https://img.shields.io/badge/Project-Page-2563EB?style=for-the-badge&logo=githubpages&logoColor=white)](https://agenticmme.github.io/)
+📄 [![Paper](https://img.shields.io/badge/Paper-arXiv%202604.03016-E11D48?style=for-the-badge&logo=arxiv&logoColor=white)](https://arxiv.org/abs/2604.03016)
+🤗 [![HF Paper](https://img.shields.io/badge/HF-Paper-F59E0B?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/papers/2604.03016)
+🗂️ [![HF Dataset](https://img.shields.io/badge/HF-Dataset-F97316?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/datasets/Crystal1047/Agentic-MME)
 
-[![Tasks](https://img.shields.io/badge/Tasks-418-0A7B83?style=flat-square)](https://huggingface.co/datasets/Crystal1047/Agentic-MME)
-[![Checkpoints](https://img.shields.io/badge/Checkpoints-2000%2B-1D3557?style=flat-square)](https://arxiv.org/pdf/2604.03016)
-[![Domains](https://img.shields.io/badge/Domains-6-457B9D?style=flat-square)](https://arxiv.org/pdf/2604.03016)
-[![Levels](https://img.shields.io/badge/Levels-3-E76F51?style=flat-square)](https://arxiv.org/pdf/2604.03016)
+[![Tasks](https://img.shields.io/badge/🧩_Tasks-418-0A7B83?style=flat-square)](https://huggingface.co/datasets/Crystal1047/Agentic-MME)
+[![Checkpoints](https://img.shields.io/badge/📍_Checkpoints-2000%2B-1D3557?style=flat-square)](https://arxiv.org/pdf/2604.03016)
+[![Domains](https://img.shields.io/badge/🗺️_Domains-6-457B9D?style=flat-square)](https://arxiv.org/pdf/2604.03016)
+[![Levels](https://img.shields.io/badge/🎮_Levels-3-E76F51?style=flat-square)](https://arxiv.org/pdf/2604.03016)
+[![Process](https://img.shields.io/badge/🔬_Process-Verified-4C1D95?style=flat-square)](https://arxiv.org/pdf/2604.03016)
+[![Harness](https://img.shields.io/badge/🧩_Harness-Friendly-15803D?style=flat-square)](#evaluation)
 
 [[Project Page](https://agenticmme.github.io/)] [[Paper PDF](https://arxiv.org/pdf/2604.03016)] [[Dataset](https://huggingface.co/datasets/Crystal1047/Agentic-MME)]
 
@@ -21,18 +23,31 @@
 </p>
 
 <p align="center">
+  <b>🎨 Comic-Style Visual Reasoning</b> · <b>🧠 Tool-Augmented Thinking</b> · <b>🌐 Retrieval-Grounded Decisions</b>
+</p>
+
+<p align="center">
   <b>🔬 Process Benchmark</b> · <b>📊 ACC + Diagnostic Scores</b>
 </p>
 
+| 🚀 Quick Entry | 📦 Dataset | 🧪 Run | 📈 Eval | 🏁 Comparison |
+|---|---|---|---|---|
+| [Project Page](https://agenticmme.github.io/) | [HF Dataset](https://huggingface.co/datasets/Crystal1047/Agentic-MME) | `general/` + `atomic/` scripts | `evaluation/` scripts | Task-only ACC + Process Track |
 
 ---
 
-## News
+## 📰 News
 
-- **`2026.04.06`** Agentic-MME released on arXiv.
-- **`2026.04.06`** Official benchmark code and dataset usage pipeline released.
+[![Latest](https://img.shields.io/badge/LATEST-2026.04.06-111827?style=flat-square)](https://arxiv.org/abs/2604.03016)
+[![Status](https://img.shields.io/badge/Status-Active%20Development-0EA5E9?style=flat-square)](https://github.com/ChoS3nE11ven/Agentic-MME)
+
+| Date | Update |
+|---|---|
+| `2026.04.06` | 🚀📄 **Agentic-MME released on arXiv** |
+| `2026.04.06` | 🛠️🤗 **Official benchmark code + dataset usage pipeline released** |
 
 ---
+
 
 ## Contents
 
