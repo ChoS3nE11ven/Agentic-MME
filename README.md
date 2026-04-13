@@ -287,8 +287,11 @@ python general/run_general_script_openai.py \
   --search_config configs/search_config.json \
   --max_rounds 15 \
   --max_tool_calls 15 \
-  --skip_existing
+  --skip_existing \
+  --shard <shard_idx> \
+  --num_shards <num_shards>
 ```
+Use `--num_shards 1 --shard 0` for single-process run.
 
 #### Local models
 
@@ -301,7 +304,9 @@ python -m general.run_general_script_thyme \
   --model_path /path/to/thyme-model \
   --enable_search \
   --search_config configs/search_config.json \
-  --skip_existing
+  --skip_existing \
+  --shard <shard_idx> \
+  --num_shards <num_shards>
 
 # DeepEyes
 python -m general.run_general_script_deepeyes \
@@ -311,7 +316,9 @@ python -m general.run_general_script_deepeyes \
   --model_path /path/to/deepeyes-model \
   --enable_search \
   --search_config configs/search_config.json \
-  --skip_existing
+  --skip_existing \
+  --shard <shard_idx> \
+  --num_shards <num_shards>
 ```
 
 ### ⚙️ Batch run (atomic mode)
@@ -329,8 +336,11 @@ python atomic/run_atomic_tools_openai.py \
   --search_config configs/search_config.json \
   --max_rounds 15 \
   --max_tool_calls 15 \
-  --skip_existing
+  --skip_existing \
+  --shard <shard_idx> \
+  --num_shards <num_shards>
 ```
+Use `--num_shards 1 --shard 0` for single-process run.
 
 #### Local models
 
@@ -343,7 +353,9 @@ python atomic/run_atomic_tools_thyme.py \
   --model_path /path/to/thyme-model \
   --enable_search \
   --search_config configs/search_config.json \
-  --skip_existing
+  --skip_existing \
+  --shard <shard_idx> \
+  --num_shards <num_shards>
 
 # DeepEyes
 python atomic/run_atomic_tools_deepeyes.py \
@@ -353,7 +365,9 @@ python atomic/run_atomic_tools_deepeyes.py \
   --model_path /path/to/deepeyes-model \
   --enable_search \
   --search_config configs/search_config.json \
-  --skip_existing
+  --skip_existing \
+  --shard <shard_idx> \
+  --num_shards <num_shards>
 ```
 
 ### 🧩 Important arguments
@@ -383,7 +397,15 @@ python atomic/run_atomic_tools_deepeyes.py \
 
 ## Evaluation
 
-### 📊 Step 1: score runs
+```mermaid
+flowchart LR
+  A["Run Experiments"] --> B["eval_runs_search.py"]
+  B --> C["analyze_v.py (Optional)"]
+  B --> D["aggregate_shards.py (Only if shard eval)"]
+  D --> C
+```
+
+### 📊 Step 1: score runs (required)
 
 ```bash
 python evaluation/eval_runs_search.py \
@@ -397,96 +419,65 @@ Default summary output:
 runs/scores/general_gpt-4o_scored.json
 ```
 
-When running with shards (`--num_shards > 1`), each shard writes:
+For shard-mode evaluation, see [Sharded Runs](#sharded-runs).
 
-```text
-runs/scores/general_gpt-4o_shard{shard_idx}_scored.json
-```
-
-### 🔍 Step 2: optional V-axis breakdown
-
-```bash
-python evaluation/analyze_v.py \
-  runs/scores/general_gpt-4o_scored.json \
-  <dataset_root>/json
-```
-
-This script breaks V-axis into `tool-use` and `visual-check`, and reports `Overall / L1 / L2 / L3`.
-
-### 🧮 Step 3: aggregate from per-task results
+### 🧮 Step 2: aggregate shard evaluation (only for shard eval)
 
 ```bash
 python evaluation/aggregate_shards.py \
   --runs_dir runs/general/gpt-4o
 ```
 
-`aggregate_shards.py` reads each run folder's `result_scored.json` and produces:
+Output:
 
 ```text
 runs/scores/general_gpt-4o_aggregated.json
 ```
 
+### 🔍 Step 3: optional V-axis breakdown
+
+```bash
+python evaluation/analyze_v.py \
+  <score_json_path> \
+  <dataset_root>/json
+```
+
+`<score_json_path>` should be:
+
+- non-shard run: `runs/scores/*_scored.json`
+- shard run: `runs/scores/*_aggregated.json` (after Step 2)
+
+This script breaks V-axis into `tool-use` and `visual-check`, and reports `Overall / L1 / L2 / L3`.
+
 ---
 
 ## Sharded Runs
 
-All major run/eval scripts support `--shard` and `--num_shards`.
-
-> Sharding strategy: contiguous blocks (not interleaved sampling).
-
-### 1) Launch N shards in parallel (run stage)
+This mode is optional. Use exactly the same run/eval commands as above, and only add:
 
 ```bash
-NUM_SHARDS=8
-MODEL=gpt-4o
-DATASET_ROOT=<dataset_root>
-
-mkdir -p logs
-for SHARD in $(seq 0 $((NUM_SHARDS-1))); do
-  python general/run_general_script_openai.py \
-    --task_dir ${DATASET_ROOT}/json \
-    --dataset_root ${DATASET_ROOT} \
-    --images_dir ${DATASET_ROOT}/images \
-    --model ${MODEL} \
-    --api_config configs/api.json \
-    --enable_search \
-    --search_config configs/search_config.json \
-    --skip_existing \
-    --shard ${SHARD} \
-    --num_shards ${NUM_SHARDS} \
-    > logs/run_shard_${SHARD}.log 2>&1 &
-done
-wait
+--shard <shard_idx> --num_shards <num_shards>
 ```
 
-### 2) Launch N shards in parallel (evaluation stage)
+Minimal example (`shard_idx=0`, `num_shards=8`):
 
 ```bash
-NUM_SHARDS=8
-MODEL=gpt-4o
-RUNS_DIR=runs/general/${MODEL}
-
-mkdir -p logs
-for SHARD in $(seq 0 $((NUM_SHARDS-1))); do
-  python evaluation/eval_runs_search.py \
-    --runs_dir ${RUNS_DIR} \
-    --api_config configs/api.json \
-    --skip_existing \
-    --shard ${SHARD} \
-    --num_shards ${NUM_SHARDS} \
-    > logs/eval_shard_${SHARD}.log 2>&1 &
-done
-wait
+python general/run_general_script_openai.py \
+  --task_dir <dataset_root>/json \
+  --dataset_root <dataset_root> \
+  --images_dir <dataset_root>/images \
+  --model gpt-4o \
+  --api_config configs/api.json \
+  --skip_existing \
+  --shard 0 \
+  --num_shards 8
 ```
 
-### 3) Aggregate all shard outputs
+Then run the same command with `--shard 1`, `--shard 2`, ..., and aggregate with:
 
 ```bash
-python evaluation/aggregate_shards.py \
-  --runs_dir runs/general/gpt-4o
+python evaluation/aggregate_shards.py --runs_dir runs/general/gpt-4o
 ```
-
-You can apply exactly the same pattern to atomic mode by replacing script paths and `runs/atomic/<model>`.
 
 ---
 
