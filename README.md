@@ -20,6 +20,14 @@
   <img src="./assets/case.png" alt="Agentic-MME case study" width="920"/>
 </p>
 
+<p align="center">
+  <b>🔬 Process Benchmark</b> · <b>🧩 Harness Friendly</b> · <b>📊 ACC + Diagnostic Scores</b>
+</p>
+
+| 🚀 Quick Entry | 📦 Dataset | 🧪 Run | 📈 Eval |
+|---|---|---|---|
+| [Project Page](https://agenticmme.github.io/) | [HF Dataset](https://huggingface.co/datasets/Crystal1047/Agentic-MME) | `general/` + `atomic/` scripts | `evaluation/` scripts |
+
 ---
 
 ## News
@@ -397,15 +405,17 @@ python atomic/run_atomic_tools_deepeyes.py \
 
 ## Evaluation
 
-```mermaid
-flowchart LR
-  A["Run Experiments"] --> B["eval_runs_search.py"]
-  B --> C["analyze_v.py (Optional)"]
-  B --> D["aggregate_shards.py (Only if shard eval)"]
-  D --> C
-```
+### 🧭 Evaluation Tracks
 
-### 📊 Step 1: score runs (required)
+| Track | What it measures | Best for |
+|---|---|---|
+| **Track A: Process Track (Official)** | Final ACC + S/V + V-tool/V-true + efficiency | full agentic diagnosis |
+| **Track B: Task-Only ACC (Harness-Friendly)** | final answer accuracy on tasks | fair cross-harness comparison |
+
+We recommend **Track A** as the default protocol.  
+At the same time, we also **encourage and support Track B** when teams use different harnesses or tool-execution stacks, so comparisons are less affected by harness implementation details.
+
+### 📊 Track A · Step 1: run official scoring
 
 ```bash
 python evaluation/eval_runs_search.py \
@@ -419,9 +429,7 @@ Default summary output:
 runs/scores/general_gpt-4o_scored.json
 ```
 
-For shard-mode evaluation, see [Sharded Runs](#sharded-runs).
-
-### 🧮 Step 2: aggregate shard evaluation (only for shard eval)
+### 🧮 Track A · Step 2: aggregate (only if shard eval)
 
 ```bash
 python evaluation/aggregate_shards.py \
@@ -434,7 +442,7 @@ Output:
 runs/scores/general_gpt-4o_aggregated.json
 ```
 
-### 🔍 Step 3: optional V-axis breakdown
+### 🔍 Track A · Step 3: optional V-axis breakdown
 
 ```bash
 python evaluation/analyze_v.py \
@@ -442,12 +450,22 @@ python evaluation/analyze_v.py \
   <dataset_root>/json
 ```
 
-`<score_json_path>` should be:
+`<score_json_path>` rule (important):
 
 - non-shard run: `runs/scores/*_scored.json`
 - shard run: `runs/scores/*_aggregated.json` (after Step 2)
 
 This script breaks V-axis into `tool-use` and `visual-check`, and reports `Overall / L1 / L2 / L3`.
+
+### 🎯 Track B · Task-only ACC (Harness-Friendly)
+
+If you run with a custom harness, we suggest reporting:
+
+- model name + decoding settings
+- evaluated split/task count
+- **final answer ACC only** on the released tasks
+
+This keeps comparisons simple and robust when tool sandboxing/execution details differ across harnesses.
 
 ---
 
