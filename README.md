@@ -21,7 +21,7 @@
 </p>
 
 <p align="center">
-  <b>🔬 Process Benchmark</b> · <b>🧩 Harness Friendly</b> · <b>📊 ACC + Diagnostic Scores</b>
+  <b>🔬 Process Benchmark</b> · <b>📊 ACC + Diagnostic Scores</b>
 </p>
 
 | 🚀 Quick Entry | 📦 Dataset | 🧪 Run | 📈 Eval |
