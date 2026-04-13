@@ -24,9 +24,6 @@
   <b>🔬 Process Benchmark</b> · <b>📊 ACC + Diagnostic Scores</b>
 </p>
 
-| 🚀 Quick Entry | 📦 Dataset | 🧪 Run | 📈 Eval |
-|---|---|---|---|
-| [Project Page](https://agenticmme.github.io/) | [HF Dataset](https://huggingface.co/datasets/Crystal1047/Agentic-MME) | `general/` + `atomic/` scripts | `evaluation/` scripts |
 
 ---
 
