@@ -2,10 +2,15 @@
 
 <div align="center">
 
-[![Project Page](https://img.shields.io/badge/Project-Page-blue)](https://agenticmme.github.io/)
-[![Paper](https://img.shields.io/badge/Paper-arXiv%202604.03016-red)](https://arxiv.org/abs/2604.03016)
-[![HF Paper](https://img.shields.io/badge/Paper-HuggingFace-yellow)](https://huggingface.co/papers/2604.03016)
-[![HF Dataset](https://img.shields.io/badge/Dataset-HuggingFace-orange)](https://huggingface.co/datasets/Crystal1047/Agentic-MME)
+[![Project Page](https://img.shields.io/badge/Project-Page-blue?style=for-the-badge)](https://agenticmme.github.io/)
+[![Paper](https://img.shields.io/badge/Paper-arXiv%202604.03016-red?style=for-the-badge)](https://arxiv.org/abs/2604.03016)
+[![HF Paper](https://img.shields.io/badge/HF-Paper-yellow?style=for-the-badge)](https://huggingface.co/papers/2604.03016)
+[![HF Dataset](https://img.shields.io/badge/HF-Dataset-orange?style=for-the-badge)](https://huggingface.co/datasets/Crystal1047/Agentic-MME)
+
+[![Tasks](https://img.shields.io/badge/Tasks-418-0A7B83?style=flat-square)](https://huggingface.co/datasets/Crystal1047/Agentic-MME)
+[![Checkpoints](https://img.shields.io/badge/Checkpoints-2000%2B-1D3557?style=flat-square)](https://arxiv.org/pdf/2604.03016)
+[![Domains](https://img.shields.io/badge/Domains-6-457B9D?style=flat-square)](https://arxiv.org/pdf/2604.03016)
+[![Levels](https://img.shields.io/badge/Levels-3-E76F51?style=flat-square)](https://arxiv.org/pdf/2604.03016)
 
 [[Project Page](https://agenticmme.github.io/)] [[Paper PDF](https://arxiv.org/pdf/2604.03016)] [[Dataset](https://huggingface.co/datasets/Crystal1047/Agentic-MME)]
 
@@ -48,12 +53,16 @@ Agentic-MME is a **process-verified benchmark** for evaluating multimodal agenti
 
 Unlike final-answer-only benchmarks, Agentic-MME explicitly evaluates whether a model can:
 
-1. perform the right **visual operations** to expose hidden evidence, and
-2. perform the right **web retrieval strategy** to collect missing knowledge,
+1. **see better** through active visual operations (Visual Expansion), and
+2. **know better** through open-web retrieval (Knowledge Expansion),
 
 while maintaining correct multi-turn reasoning under realistic interaction budgets.
 
-The benchmark is built around real-world tasks where answer-bearing cues are often tiny, ambiguous, or distributed across multiple steps and modalities.
+> Highlights:
+> - 🧠 Process-level auditing instead of answer-only grading
+> - 🖼️ Visual operation correctness and artifact verification
+> - 🌐 Search strategy and evidence quality verification
+> - ⏱️ Efficiency diagnosis via overthinking vs. human trajectories
 
 ---
 
@@ -61,14 +70,14 @@ The benchmark is built around real-world tasks where answer-bearing cues are oft
 
 ### 1) Two core capability dimensions
 
-- **Visual Expansion**: active image manipulation (crop/rotate/enhance/...) to reveal latent visual cues.
-- **Knowledge Expansion**: open-web retrieval (search/lens/webpage reading) to obtain external evidence beyond parametric memory.
+- 🖼️ **Visual Expansion**: active image manipulation (crop/rotate/enhance/...) to reveal latent visual cues.
+- 🌐 **Knowledge Expansion**: open-web retrieval (search/lens/webpage reading) to obtain external evidence beyond parametric memory.
 
-### 2) Progressive task difficulty (not a single flat score)
+### 2) Progressive task difficulty (not a flat score)
 
-- **Level 1**: single decisive visual operation.
-- **Level 2**: short multi-step visual + retrieval workflow.
-- **Level 3**: iterative, interleaved visual-retrieval synergy under ambiguity.
+- `Level 1`: single decisive visual operation.
+- `Level 2`: short multi-step visual + retrieval workflow.
+- `Level 3`: iterative, interleaved visual-retrieval synergy under ambiguity.
 
 ### 3) Process-level dual-axis scoring
 
@@ -77,14 +86,14 @@ The benchmark is built around real-world tasks where answer-bearing cues are oft
 | **S-axis (Strategy)** | Whether retrieval plans/actions are correct and useful | query intent, keyword quality, URL/evidence correctness |
 | **V-axis (Visual)** | Whether visual operations are correctly executed and produce valid visual evidence | intermediate artifacts and checkpoint pass/fail |
 
-For finer diagnostics, V-axis is split into:
+V-axis is further decomposed for diagnosis:
 
-- **V-tool**: whether the expected tool/action was invoked.
-- **V-true**: whether generated visual artifacts actually satisfy the checkpoint.
+- `V-tool`: whether expected visual operations were invoked.
+- `V-true`: whether produced visual artifacts actually satisfy the checkpoint.
 
-### 4) Efficiency metric beyond correctness
+### 4) Efficiency beyond correctness
 
-- **Overthinking** is measured relative to human reference trajectories, to capture excessive or redundant tool use even when the final answer is correct.
+- ⏱️ **Overthinking** is measured relative to human reference trajectories, capturing redundant or excessive tool usage.
 
 ---
 
@@ -128,7 +137,7 @@ For finer diagnostics, V-axis is split into:
 
 ## Dataset Usage
 
-### Load from Hugging Face
+### 🤗 Load from Hugging Face
 
 ```python
 from datasets import load_dataset
@@ -151,29 +160,41 @@ Current split/fields:
   - `visual_clues`
   - `search_evidence`
 
-### Recommended local layout for runner scripts
+### 🗂️ Official dataset folder layout
 
 ```text
 <dataset_root>/
+├── image_cause/
+├── images/
 ├── json/
-│   ├── 0001.json
-│   ├── 0002.json
-│   └── ...
-└── image/
-    ├── image_0001.png
-    ├── image_0002.png
-    ├── image_0162_1.png
-    ├── image_0162_2.png
-    └── ...
+└── search_url/
 ```
 
-Image resolution rules used by the code:
+Folder purpose:
 
-- `0009.json` -> `image_0009.png`
-- `0162.json` -> `image_0162_1.png`, `image_0162_2.png`, ...
-- Images can live under `image/` or `images/`
-- If `--dataset_root` is omitted, it is inferred from the parent of your JSON directory
-- If `--images_dir` is provided, it is searched before `dataset_root/image` and `dataset_root/images`
+| Folder | Purpose | Used by runner |
+|---|---|---|
+| `json/` | Task configuration files (`*.json`) | ✅ Required |
+| `images/` | Input images referenced by task IDs | ✅ Required |
+| `image_cause/` | Auxiliary image evidence/metadata | ⚪ Optional (analysis/inspection) |
+| `search_url/` | Retrieval evidence metadata | ⚪ Optional (analysis/inspection) |
+
+### 🧭 Recommended runner invocation with this layout
+
+```bash
+python general/run_general_script_openai.py \
+  --task_dir <dataset_root>/json \
+  --dataset_root <dataset_root> \
+  --images_dir <dataset_root>/images \
+  --model gpt-4o \
+  --api_config configs/api.json
+```
+
+Notes:
+
+- `--images_dir` is optional, but passing it explicitly avoids ambiguity.
+- `--dataset_root` should point to the folder that directly contains `json/` and `images/`.
+- If omitted, `dataset_root` is inferred from the task JSON path.
 
 ---
 
@@ -197,7 +218,7 @@ pip install torch transformers accelerate
 
 ## Configuration
 
-### OpenAI API
+### 🔐 OpenAI API
 
 ```bash
 cp configs/api.json.example configs/api.json
@@ -205,7 +226,7 @@ cp configs/api.json.example configs/api.json
 
 Then edit `configs/api.json` with your key/base URL.
 
-### Web retrieval config
+### 🌐 Web retrieval config
 
 Edit `configs/search_config.json`:
 
@@ -219,7 +240,7 @@ If retrieval is not needed, simply omit `--enable_search`.
 
 ## Running Experiments
 
-### Quick sanity check (single task)
+### 🚀 Quick sanity check (single task)
 
 #### General mode + OpenAI
 
@@ -227,6 +248,7 @@ If retrieval is not needed, simply omit `--enable_search`.
 python general/run_general_script_openai.py \
   --task_json <task_json> \
   --dataset_root <dataset_root> \
+  --images_dir <dataset_root>/images \
   --model gpt-4o \
   --api_config configs/api.json \
   --enable_search \
@@ -241,6 +263,7 @@ python general/run_general_script_openai.py \
 python atomic/run_atomic_tools_openai.py \
   --task_json <task_json> \
   --dataset_root <dataset_root> \
+  --images_dir <dataset_root>/images \
   --model gpt-4o-mini \
   --api_config configs/api.json \
   --enable_search \
@@ -249,14 +272,15 @@ python atomic/run_atomic_tools_openai.py \
   --max_tool_calls 15
 ```
 
-### Batch run (general mode)
+### 📦 Batch run (general mode)
 
 #### OpenAI
 
 ```bash
 python general/run_general_script_openai.py \
-  --task_dir ../merged/json \
-  --dataset_root ../merged \
+  --task_dir <dataset_root>/json \
+  --dataset_root <dataset_root> \
+  --images_dir <dataset_root>/images \
   --model gpt-4o \
   --api_config configs/api.json \
   --enable_search \
@@ -271,8 +295,9 @@ python general/run_general_script_openai.py \
 ```bash
 # Thyme
 python -m general.run_general_script_thyme \
-  --task_dir ../merged/json \
-  --dataset_root ../merged \
+  --task_dir <dataset_root>/json \
+  --dataset_root <dataset_root> \
+  --images_dir <dataset_root>/images \
   --model_path /path/to/thyme-model \
   --enable_search \
   --search_config configs/search_config.json \
@@ -280,22 +305,24 @@ python -m general.run_general_script_thyme \
 
 # DeepEyes
 python -m general.run_general_script_deepeyes \
-  --task_dir ../merged/json \
-  --dataset_root ../merged \
+  --task_dir <dataset_root>/json \
+  --dataset_root <dataset_root> \
+  --images_dir <dataset_root>/images \
   --model_path /path/to/deepeyes-model \
   --enable_search \
   --search_config configs/search_config.json \
   --skip_existing
 ```
 
-### Batch run (atomic mode)
+### ⚙️ Batch run (atomic mode)
 
 #### OpenAI
 
 ```bash
 python atomic/run_atomic_tools_openai.py \
-  --task_dir ../merged/json \
-  --dataset_root ../merged \
+  --task_dir <dataset_root>/json \
+  --dataset_root <dataset_root> \
+  --images_dir <dataset_root>/images \
   --model gpt-4o-mini \
   --api_config configs/api.json \
   --enable_search \
@@ -310,8 +337,9 @@ python atomic/run_atomic_tools_openai.py \
 ```bash
 # Thyme
 python atomic/run_atomic_tools_thyme.py \
-  --task_dir ../merged/json \
-  --dataset_root ../merged \
+  --task_dir <dataset_root>/json \
+  --dataset_root <dataset_root> \
+  --images_dir <dataset_root>/images \
   --model_path /path/to/thyme-model \
   --enable_search \
   --search_config configs/search_config.json \
@@ -319,23 +347,24 @@ python atomic/run_atomic_tools_thyme.py \
 
 # DeepEyes
 python atomic/run_atomic_tools_deepeyes.py \
-  --task_dir ../merged/json \
-  --dataset_root ../merged \
+  --task_dir <dataset_root>/json \
+  --dataset_root <dataset_root> \
+  --images_dir <dataset_root>/images \
   --model_path /path/to/deepeyes-model \
   --enable_search \
   --search_config configs/search_config.json \
   --skip_existing
 ```
 
-### Important arguments
+### 🧩 Important arguments
 
 | Argument | Default | Description |
 |---|---|---|
 | `--task_dir` | - | Directory of task JSONs |
 | `--task_json` | - | Single task JSON path |
-| `--dataset_root` | inferred | Root used to resolve images |
-| `--images_dir` | - | Optional explicit image dir |
-| `--out_dir` | auto | Output directory |
+| `--dataset_root` | inferred | Root used to resolve dataset files |
+| `--images_dir` | - | Optional explicit image directory |
+| `--out_dir` | auto (`runs/general/{model}` or `runs/atomic/{model}`) | Output directory |
 | `--model` | script-dependent | OpenAI model name |
 | `--model_path` | script-dependent | Local model path/ID |
 | `--api_config` | - | API config JSON |
@@ -344,7 +373,9 @@ python atomic/run_atomic_tools_deepeyes.py \
 | `--max_rounds` | `15` | Max dialogue rounds |
 | `--max_tool_calls` | `15` | Max tool invocations |
 | `--skip_existing` | `false` | Skip completed tasks |
-| `--max_tasks` | `0` | Evaluate first N tasks (`0` = all) |
+| `--task_delay` | `2.0` | Delay between tasks to avoid rate limits |
+| `--max_retries` | `3` | Retry times for rate-limit errors |
+| `--max_tasks` | `0` | Process first N tasks (`0` = all) |
 | `--shard` | `0` | Shard index |
 | `--num_shards` | `1` | Total shard count |
 
@@ -352,7 +383,7 @@ python atomic/run_atomic_tools_deepeyes.py \
 
 ## Evaluation
 
-### Step 1: score runs
+### 📊 Step 1: score runs
 
 ```bash
 python evaluation/eval_runs_search.py \
@@ -360,30 +391,40 @@ python evaluation/eval_runs_search.py \
   --api_config configs/api.json
 ```
 
-Typical summary output:
+Default summary output:
 
 ```text
 runs/scores/general_gpt-4o_scored.json
 ```
 
-### Step 2: optional V-axis breakdown
+When running with shards (`--num_shards > 1`), each shard writes:
+
+```text
+runs/scores/general_gpt-4o_shard{shard_idx}_scored.json
+```
+
+### 🔍 Step 2: optional V-axis breakdown
 
 ```bash
 python evaluation/analyze_v.py \
   runs/scores/general_gpt-4o_scored.json \
-  ../merged/json
+  <dataset_root>/json
 ```
 
 This script breaks V-axis into `tool-use` and `visual-check`, and reports `Overall / L1 / L2 / L3`.
 
-### Step 3: aggregate shard outputs
+### 🧮 Step 3: aggregate from per-task results
 
 ```bash
 python evaluation/aggregate_shards.py \
   --runs_dir runs/general/gpt-4o
 ```
 
-Useful when evaluation is run with `--num_shards > 1`.
+`aggregate_shards.py` reads each run folder's `result_scored.json` and produces:
+
+```text
+runs/scores/general_gpt-4o_aggregated.json
+```
 
 ---
 
@@ -391,28 +432,67 @@ Useful when evaluation is run with `--num_shards > 1`.
 
 All major run/eval scripts support `--shard` and `--num_shards`.
 
-Tasks are split into contiguous blocks (not interleaved sampling).
+> Sharding strategy: contiguous blocks (not interleaved sampling).
 
-Example:
+### 1) Launch N shards in parallel (run stage)
 
 ```bash
-python general/run_general_script_openai.py \
-  --task_dir ../merged/json \
-  --dataset_root ../merged \
-  --model gpt-4o \
-  --api_config configs/api.json \
-  --enable_search \
-  --search_config configs/search_config.json \
-  --skip_existing \
-  --shard 0 \
-  --num_shards 8
+NUM_SHARDS=8
+MODEL=gpt-4o
+DATASET_ROOT=<dataset_root>
+
+mkdir -p logs
+for SHARD in $(seq 0 $((NUM_SHARDS-1))); do
+  python general/run_general_script_openai.py \
+    --task_dir ${DATASET_ROOT}/json \
+    --dataset_root ${DATASET_ROOT} \
+    --images_dir ${DATASET_ROOT}/images \
+    --model ${MODEL} \
+    --api_config configs/api.json \
+    --enable_search \
+    --search_config configs/search_config.json \
+    --skip_existing \
+    --shard ${SHARD} \
+    --num_shards ${NUM_SHARDS} \
+    > logs/run_shard_${SHARD}.log 2>&1 &
+done
+wait
 ```
+
+### 2) Launch N shards in parallel (evaluation stage)
+
+```bash
+NUM_SHARDS=8
+MODEL=gpt-4o
+RUNS_DIR=runs/general/${MODEL}
+
+mkdir -p logs
+for SHARD in $(seq 0 $((NUM_SHARDS-1))); do
+  python evaluation/eval_runs_search.py \
+    --runs_dir ${RUNS_DIR} \
+    --api_config configs/api.json \
+    --skip_existing \
+    --shard ${SHARD} \
+    --num_shards ${NUM_SHARDS} \
+    > logs/eval_shard_${SHARD}.log 2>&1 &
+done
+wait
+```
+
+### 3) Aggregate all shard outputs
+
+```bash
+python evaluation/aggregate_shards.py \
+  --runs_dir runs/general/gpt-4o
+```
+
+You can apply exactly the same pattern to atomic mode by replacing script paths and `runs/atomic/<model>`.
 
 ---
 
 ## Available Tools
 
-### Atomic image tools (visual expansion)
+### 🖼️ Atomic image tools (visual expansion)
 
 | Tool | Description |
 |---|---|
@@ -431,7 +511,7 @@ python general/run_general_script_openai.py \
 | `equalize` | Histogram equalization |
 | `threshold` | Binarization |
 
-### Retrieval tools (knowledge expansion)
+### 🌐 Retrieval tools (knowledge expansion)
 
 | Tool | Description |
 |---|---|
@@ -512,4 +592,3 @@ If you find Agentic-MME useful, please cite:
   year={2026}
 }
 ```
-
