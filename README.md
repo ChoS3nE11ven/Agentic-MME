@@ -2,10 +2,10 @@
 
 <div align="center">
 
-🌐 [![Project Page](https://img.shields.io/badge/Project-Page-2563EB?style=for-the-badge&logo=githubpages&logoColor=white)](https://agenticmme.github.io/)
-📄 [![Paper](https://img.shields.io/badge/Paper-arXiv%202604.03016-E11D48?style=for-the-badge&logo=arxiv&logoColor=white)](https://arxiv.org/abs/2604.03016)
-🤗 [![HF Paper](https://img.shields.io/badge/HF-Paper-F59E0B?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/papers/2604.03016)
-🗂️ [![HF Dataset](https://img.shields.io/badge/HF-Dataset-F97316?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/datasets/Crystal1047/Agentic-MME)
+ [![Project Page](https://img.shields.io/badge/Project-Page-2563EB?style=for-the-badge&logo=githubpages&logoColor=white)](https://agenticmme.github.io/)
+ [![Paper](https://img.shields.io/badge/Paper-arXiv%202604.03016-E11D48?style=for-the-badge&logo=arxiv&logoColor=white)](https://arxiv.org/abs/2604.03016)
+ [![HF Paper](https://img.shields.io/badge/HF-Paper-F59E0B?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/papers/2604.03016)
+ [![HF Dataset](https://img.shields.io/badge/HF-Dataset-F97316?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/datasets/Crystal1047/Agentic-MME)
 
 [![Tasks](https://img.shields.io/badge/🧩_Tasks-418-0A7B83?style=flat-square)](https://huggingface.co/datasets/Crystal1047/Agentic-MME)
 [![Checkpoints](https://img.shields.io/badge/📍_Checkpoints-2000%2B-1D3557?style=flat-square)](https://arxiv.org/pdf/2604.03016)
@@ -20,10 +20,6 @@
 
 <p align="center">
   <img src="./assets/case.png" alt="Agentic-MME case study" width="920"/>
-</p>
-
-<p align="center">
-  <b>🎨 Comic-Style Visual Reasoning</b> · <b>🧠 Tool-Augmented Thinking</b> · <b>🌐 Retrieval-Grounded Decisions</b>
 </p>
 
 <p align="center">
