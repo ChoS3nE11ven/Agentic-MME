@@ -227,7 +227,6 @@ Edit `configs/search_config.json`:
 - `imgbb_api_key`: [ImgBB](https://imgbb.com) key for image upload
 - `jina_api_key`: [Jina Reader](https://jina.ai/reader) key for webpage content extraction
 
-If retrieval is not needed, simply omit `--enable_search`.
 
 ---
 
